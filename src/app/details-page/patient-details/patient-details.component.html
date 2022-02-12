@@ -1,0 +1,56 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <!--<mat-card>-->
+                <div>
+                    <div>
+                        Patient Details
+                    </div>
+                    <mat-card>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12">Name</div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">{{model.name}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12">Contact</div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">{{model.contact}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12">Gender</div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">{{model.gender}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12">Date of Birth</div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">{{model.dob}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12">Height</div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">{{model.height}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12">Weight</div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">{{model.weight}}</div>
+                        </div>
+
+                        <div class="d-flex flex-row-reverse">
+                            <div class="p-2">
+                                <button type="button" class="btn btn-light"
+                                        (click)="gotoBack()"
+                                >Back</button>
+                            </div>
+                        </div>
+
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

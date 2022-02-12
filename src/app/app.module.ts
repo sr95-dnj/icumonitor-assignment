@@ -22,23 +22,31 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AdmissionPatientDetailsComponent } from './details-page/admission-patient-details/admission-patient-details.component';
+import {MatCardModule} from '@angular/material/card';
+import { IcuStateDetailsComponent } from './details-page/icu-state-details/icu-state-details.component';
+import { IcuPatientDetailsComponent } from './details-page/icu-patient-details/icu-patient-details.component';
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ComponentsModule,
-    RouterModule,
-    AppRoutingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    })
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        ComponentsModule,
+        RouterModule,
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+        }),
+        MatCardModule
+    ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    AdmissionPatientDetailsComponent,
+    IcuStateDetailsComponent,
+    IcuPatientDetailsComponent,
 
   ],
   providers: [],

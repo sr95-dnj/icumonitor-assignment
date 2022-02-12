@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import * as Chartist from 'chartist';
+import {PatientService} from '../service/patient.service';
+import {IcuService} from '../service/icu.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
+import {ActivePatient} from '../model/active-patient.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +14,35 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild('table') table: MatTable<any>;
 
-  constructor() { }
+    activePatientModel: ActivePatient[] = new Array<ActivePatient>();
+
+    dataSource: MatTableDataSource<ActivePatient>;
+    totalActivePatientDataSource: MatTableDataSource<ActivePatient>;
+    totalActiveIcuPatientDatasource: MatTableDataSource<ActivePatient>;
+    totalPatientDataSource: MatTableDataSource<ActivePatient>;
+    totalPatientStateHistoryDataSource: MatTableDataSource<ActivePatient>;
+    totalIcuPatientDatasource: MatTableDataSource<ActivePatient>;
+
+    displayedColumns: string[] = ['id', 'nameEn', 'contact', 'dob', 'bloodGroup', 'height', 'weight', 'action'];
+
+    totalPatients: number;
+    totalActiveIcuPatient: number;
+    totalIcuState: number;
+    totalIcuPatient: number;
+    totalActivePatients: number;
+    totalPatientStateHistory: number;
+    totalReleaseIcuPatient: number;
+    totalReleasePatirnt: number;
+
+  constructor(
+      private patientService: PatientService,
+      private icuService: IcuService,
+      private router : Router,
+  ) { }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -145,6 +179,105 @@ export class DashboardComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+      this.getAllApis();
   }
+
+  getAllApis(){
+      this.getAllActiveIcuPatient();
+      this.getAllIcuPatient();
+      this.getAllIcuState();
+      this.getAllPatients();
+      this.getAllActivePatient();
+      this.getAllReleasePatient();
+      this.getPatientStateHistory();
+      this.getReleaseIcuPatient();
+  }
+
+    // return list ///////////
+      getAllPatients(){
+          this.patientService.getAllPatients().subscribe(res=>{
+              this.totalPatients = res.length;
+              this.totalPatientDataSource = res;
+          })
+      }
+
+    // return list
+    getAllActivePatient(){
+        this.patientService.getAllActivePatient().subscribe(res=>{
+            this.totalActivePatients = res.length;
+            this.totalActivePatientDataSource = res;
+        })
+    }
+
+    // return object
+    getAllReleasePatient(){
+        this.patientService.getReleasePatientHispory().subscribe(res=>{
+            this.totalReleasePatirnt = res.length;
+        })
+    }
+    // return list
+    getPatientStateHistory(){
+        this.patientService.getAllPateintState().subscribe(res=>{
+            this.totalPatientStateHistory = res.length;
+        })
+    }
+
+
+
+    // return object
+    getAllActiveIcuPatient(){
+        this.icuService.getAllActiveIcuPatient().subscribe(res=>{
+            console.log("active icu patient",res);
+        })
+    }
+
+    // return list
+    getAllIcuState(){
+        this.icuService.getAllIcuState().subscribe(res=>{
+            this.totalIcuState = res.length;
+            console.log("total Icu State",res);
+        })
+    }
+
+    // return list //////////
+    getAllIcuPatient(){
+        this.icuService.getAllIcuPatient().subscribe(res=>{
+            this.totalIcuPatient = res.length;
+            console.log("total Icu Patient",res);
+        })
+    }
+
+    // return object
+    getReleaseIcuPatient(){
+        this.icuService.getReleaseIcuPatient().subscribe(res=>{
+            this.totalReleaseIcuPatient = res.length;
+            console.log("total Icu Patient",res);
+        })
+    }
+
+    edit(uuid: any) {
+        
+    }
+
+    goToPatientsListPage() {
+      this.router.navigate(['/all-patient-list'])
+    }
+
+    goToActivePatientsListPage() {
+        this.router.navigate(['/active-patient-list'])
+    }
+
+    goToICUPatientsListPage() {
+        this.router.navigate(['/icu-patient-list'])
+    }
+
+    goToPatientStateListPage() {
+        this.router.navigate(['/patient-state-history'])
+    }
+
+    goToICUStateListPage() {
+        this.router.navigate(['/all-icu-state'])
+    }
+
 
 }
